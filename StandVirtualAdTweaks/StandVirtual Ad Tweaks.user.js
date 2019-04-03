@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name         StandVirtual Ad Tweaks
 // @namespace    https://www.standvirtual.com
-// @version      0.1
+// @version      0.2
 // @description  Tweaks to the ad page
 // @author       Epaminondas
 // @match        https://www.standvirtual.com/anuncio/*
 // @require https://code.jquery.com/jquery-3.3.1.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js
+// @require https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
-(function() {
+function processarKmsAno() {
     moment.locale('pt');
     var elm = $("li > span.offer-params__label:contains('Quilómetros')");
     var skms = $(elm).next().text().trim();
@@ -39,5 +40,7 @@
     console.debug('kms/ano: ' + kmsano);
     var skmsano = Number.parseInt(kmsano).toLocaleString('pt-PT', {useGrouping:true});
     console.debug('skmsano: ' + skmsano);
-    $(elm).parent().last().append(' <div class="offer-params__value"> [' + skmsano +' /ano]</div>');
-})();
+    $(elm).parent().last().append(' <div class="offer-params__value"> [' + skmsano +' km/ano]</div>');
+}
+
+waitForKeyElements ("#parameters", processarKmsAno);
