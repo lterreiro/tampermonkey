@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name         StandVirtual Search Results Tweaks
 // @namespace    https://www.standvirtual.com
-// @version      0.1
+// @version      0.2
 // @description  Tweaks to the search results page
 // @author       Epaminondas
 // @match        https://www.standvirtual.com/carros/*
 // @require https://code.jquery.com/jquery-3.3.1.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js
+// @require https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
-(function() {
+function processarKmsAno() {
     moment.locale('pt');
     $("article").each(function(index){
         var elm = $(this).find("li[data-code='mileage']>span");
@@ -42,4 +43,7 @@
         console.debug('skmsano: ' + skmsano);
         $(elm).after(' <span>[' + skmsano +' /ano]</span>');
     });
-})();
+}
+
+
+waitForKeyElements (".offers.list", processarKmsAno);
